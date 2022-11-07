@@ -20,32 +20,8 @@ const Login = ({ setAuth }) => {
 
   const [{ user }, dispatch] = useStateValue();
 
-  // const loginWithGoogle = async () => {
-  //   signInWithPopup(firebaseAuth, provider)
-  //     .then((result) => {
-  //       // This gives you a Google Access Token. You can use it to access the Google API.
-  //       const credential = GoogleAuthProvider.credentialFromResult(result);
-  //       const token = credential.accessToken;
-  //       // The signed-in user info.
-  //       const user = result.user;
-  //       console.log(user)
-  //       // ...
-  //     })
-  //     .catch((error) => {
-  //       // Handle Errors here.
-  //       const errorCode = error.code;
-  //       const errorMessage = error.message;
-  //       console.log(errorMessage)
-  //       // The email of the user's account used.
-  //       const email = error.customData.email;
-  //       // The AuthCredential type that was used.
-  //       const credential = GoogleAuthProvider.credentialFromError(error);
-  //       // ...
-  //     });
-  // };
-
   const loginWithGoogle = async () => {
-    signInWithPopup(firebaseAuth, provider).then((userCred) => {
+    await signInWithPopup(firebaseAuth, provider).then((userCred) => {
       if (userCred) {
         setAuth(true);
         window.localStorage.setItem("auth", "true");
@@ -53,7 +29,7 @@ const Login = ({ setAuth }) => {
         firebaseAuth.onAuthStateChanged((userCred) => {
           if (userCred) {
             userCred.getIdToken().then((token) => {
-              // console.log(token);
+              window.localStorage.setItem("auth", "true");
               validateUser(token).then((data) => {
                 dispatch({
                   type: actionType.SET_USER,
@@ -79,7 +55,7 @@ const Login = ({ setAuth }) => {
     if (window.localStorage.getItem("auth") === "true") {
       navigate("/", { replace: true });
     }
-  });
+  }, []);
 
   return (
     <div className="relative w-screen h-screen">

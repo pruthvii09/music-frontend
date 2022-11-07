@@ -47,7 +47,7 @@ const App = () => {
         navigate("/login");
       }
     });
-  });
+  }, []);
 
   return (
     <AnimatePresence exitBeforeEnter>
