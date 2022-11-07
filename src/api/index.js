@@ -1,7 +1,7 @@
 import axios from "axios";
 import { MdRouter } from "react-icons/md";
 
-const baseURL = "http://localhost:4000/";
+const baseURL = "https://music-app-backend.onrender.com/";
 
 // validate the user
 export const validateUser = async (token) => {
